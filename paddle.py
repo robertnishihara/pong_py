@@ -105,14 +105,14 @@ class Paddle():
             # print('prediction')
             if (self.prediction.y < (self.top + self.height/2 - 5)):
                 action = self.UP
-                print("moved up")
+                # print("moved up")
             elif (self.prediction.y > (self.bottom - self.height/2 + 5)):
                 action = self.DOWN
-                print("moved down")
+                # print("moved down")
 
             else:
                 action = self.STOP
-                print("nothing")
+                # print("nothing")
         self.ai_prev_action = action
         return self.step(action)
 

@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 game = PongJS()
 terminated = False
 state = game.init()
-plt.ion()
 
 x = []
 y = []
@@ -17,6 +16,7 @@ y = []
 
 # ax = fig.add_subplot(111)
 # line1, = ax.plot(x, y, 'r-')
+plt.ion()
 plt.figure()
 plt.show()
 plt.pause(0.05)
@@ -31,12 +31,12 @@ while not terminated:
     x.append(ns[0])
     y.append(ns[1]) 
     print(ns[0], ns[1])
-    if step % 5 == 0:
+    # plt.plot(game.left_pad.x, game.left_pad.y, 'o')
+    plt.plot(game.right_pad.x, game.right_pad.y, 'o')
+    if step % 10 == 0:
         for line in plt.axes().lines:
             line.remove()
         plt.plot(x, y)
-        plt.plot(game.left_pad.x, game.left_pad.y, 'o')
-        plt.plot(game.right_pad.x, game.right_pad.y, 'o')
         plt.draw()
         plt.pause(0.05)
     # time.sleep(0.01)
