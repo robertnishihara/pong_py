@@ -1,3 +1,7 @@
+import random 
+import helper
+from helper import Rectangle
+
 class Paddle():
     STOP = 0
     UP = 1
@@ -11,13 +15,15 @@ class Paddle():
         self.dt = pong.dt
         self.minY = pong.wall_width
         self.maxY = pong.height - pong.wall_width - self.height
-        self.speed = (self.maxX - self.minX) /2
-        self.ai_reaction = 1.0
+        self.speed = (self.maxY - self.minY) / 2
+        self.ai_reaction = 0.1
         self.ai_error = 120
+        self.pong = pong
         self.set_direction(0)
         self.set_position(pong.width - self.width if rhs else 0, 
                           self.minY + (self.maxY - self.minY) / 2)
         self.prediction = None
+        self.ai_prev_action = 0
 
     def set_position(self, x, y):
         self.x      = x
@@ -43,17 +49,17 @@ class Paddle():
         amt = self.down - self.up
         if amt != 0:
             y = self.y + (amt * self.dt * self.speed)
-        if y < self.minY:
-            y = self.minY
-        elif y > self.maxY:
-            y = self.maxY
-        self.set_position(self.x, y)
+            if y < self.minY:
+                y = self.minY
+            elif y > self.maxY:
+                y = self.maxY
+            self.set_position(self.x, y)
 
     def predict(self, ball, dt):
         # only re-predict if the ball changed direction, or its been some amount of time since last prediction
         if (self.prediction and ((self.prediction.dx * ball.dx) > 0) and
                 ((self.prediction.dy * ball.dy) > 0) and 
-                (self.prediction.since < self.aiReaction)):
+                (self.prediction.since < self.ai_reaction)):
             self.prediction.since += dt
             return
 
@@ -82,9 +88,10 @@ class Paddle():
             self.prediction.exactY = self.prediction.y
             closeness = (ball.x - self.right if ball.dx < 0 else self.left - ball.x) / self.pong.width
             error = self.ai_error * closeness
-            self.prediction.y = self.prediction.y + Game.random(-error, error)
+            self.prediction.y = self.prediction.y + random.uniform(-error, error)
 
     def ai_step(self, ball):
+
         if (((ball.x < self.left) and (ball.dx < 0)) or
            ((ball.x > self.right) and (ball.dx > 0))):
             self.stopMovingUp()
@@ -92,17 +99,22 @@ class Paddle():
             return
 
         self.predict(ball, self.dt)
+        action = self.ai_prev_action
 
         if (self.prediction):
+            # print('prediction')
             if (self.prediction.y < (self.top + self.height/2 - 5)):
-                self.stopMovingDown()
-                self.moveUp()
+                action = self.UP
+                print("moved up")
             elif (self.prediction.y > (self.bottom - self.height/2 + 5)):
-                self.stopMovingUp()
-                self.moveDown()
+                action = self.DOWN
+                print("moved down")
+
             else:
-                self.stopMovingUp()
-                self.stopMovingDown()
+                action = self.STOP
+                print("nothing")
+        self.ai_prev_action = action
+        return self.step(action)
 
     def moveUp(self):
         self.down = 0

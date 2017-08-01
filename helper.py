@@ -4,6 +4,28 @@ Position = namedtuple("Position", ["nx", "ny", "x", "y", "dx", "dy"])
 Intercept = namedtuple("Intercept", ["x", "y", "d"])
 Rectangle = namedtuple("Rectangle", ["left", "right", "top", "bottom"])
 
+class Position():
+    def __init__(self, nx, ny, x, y, dx, dy):
+        self.nx = nx 
+        self.ny = ny 
+        self.x = x
+        self.y = y
+        self.dx = dx
+        self.dy = dy 
+
+class Intercept():
+    def __init__(self, x, y, d):
+        self.x = x
+        self.y = y
+        self.d = d
+
+class Rectangle():
+    def __init__(self, left, right, top, bottom):
+        self.left = left
+        self.right = right
+        self.top = top
+        self.bottom = bottom
+
 def accelerate(x, y, dx, dy, accel, dt):
     x2  = x + (dt * dx) + (accel * dt * dt * 0.5);
     y2  = y + (dt * dy) + (accel * dt * dt * 0.5);
