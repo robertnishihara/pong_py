@@ -3,7 +3,7 @@ from ball import Ball
 from paddle import Paddle
 
 class PongJS():
-    # MDP to 
+    # MDP to
     def __init__(self):
         self.width = 640
         self.height = 480
@@ -17,7 +17,7 @@ class PongJS():
         # do logic for self
         self.left_pad.step(action)
         self.right_pad.ai_step(self.ball)
-        
+
         self.ball.update(self.left_pad, self.right_pad)
         term, reward = self.terminate()
         if term:
@@ -37,7 +37,8 @@ class PongJS():
             return False, 0
 
     def get_state(self):
-        return [self.ball.x, self.ball.y, self.ball.dx, self.ball.dy]
+        #return np.array([self.ball.x, self.ball.y, self.ball.dx, self.ball.dy])
+        return np.array([self.ball.x, self.ball.y, self.ball.x, self.ball.y])
 
     def reset(self, player):
         self.ball.reset(player)
