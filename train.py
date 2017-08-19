@@ -10,7 +10,7 @@ import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import time
 
-n_obs = 4              # dimensionality of observations
+n_obs = 8              # dimensionality of observations
 n_h = 256              # number of hidden layer neurons
 #n_actions = 2          # number of available actions
 n_actions = 3          # number of available actions
@@ -38,7 +38,7 @@ def discounted_normalized_rewards(r):
         running_sum = running_sum * gamma + r[t]
         result[t] = running_sum
     return (result - np.mean(result)) / np.std(result)
-        
+
 input_observation = tf.placeholder(dtype=tf.float32, shape=[None, n_obs])
 input_probability = tf.placeholder(dtype=tf.float32, shape=[None, n_actions])
 input_reward = tf.placeholder(dtype=tf.float32, shape=[None,1])
