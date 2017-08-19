@@ -10,7 +10,7 @@ from pongjsenv import PongJSEnv
 
 ray.init(num_workers=0)
 
-n_obs = 4              # dimensionality of observations
+n_obs = 8              # dimensionality of observations
 n_h = 256              # number of hidden layer neurons
 #n_actions = 2          # number of available actions
 n_actions = 3          # number of available actions

@@ -15,6 +15,9 @@ class Ball():
         self.dy = 0
 
     def set_position(self, x, y):
+        self.x_prev = x if not hasattr(self, "x") else self.x
+        self.y_prev = y if not hasattr(self, "y") else self.y
+
         self.x      = x
         self.y      = y
         self.left   = self.x - self.radius
@@ -28,11 +31,11 @@ class Ball():
 
     def update(self, left_pad, right_pad):
 
-        pos = helper.accelerate(self.x, self.y, 
-                            self.dx, self.dy, 
+        pos = helper.accelerate(self.x, self.y,
+                            self.dx, self.dy,
                             self.accel, self.dt);
 
-        if ((pos.dy > 0) and (pos.y > self.maxY)):            
+        if ((pos.dy > 0) and (pos.y > self.maxY)):
             pos.y = self.maxY
             pos.dy = -pos.dy
         elif ((pos.dy < 0) and (pos.y < self.minY)):
@@ -42,7 +45,7 @@ class Ball():
         paddle = left_pad if (pos.dx < 0) else right_pad;
         pt = helper.ballIntercept(self, paddle, pos.nx, pos.ny);
 
-        if pt:            
+        if pt:
             if pt.d == 'left' or pt.d == 'right':
                 pos.x = pt.x
                 pos.dx = -pos.dx
