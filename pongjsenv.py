@@ -15,6 +15,14 @@ class PongJSEnv(object):
         self.action_space = env.action_space
         self.observation_space = gym.spaces.box.Box(low=0, high=1, shape=(8,))
 
+    @property
+    def right_pad(self):
+        return self.env.right_pad
+
+    @property
+    def left_pad(self):
+        return self.env.left_pad
+
     def reset(self):
         self.env.init()
         return transform_state(self.env.get_state())
