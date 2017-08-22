@@ -1,18 +1,16 @@
-from pongjs import PongJS
-
-
 import gym
-env = gym.make("CartPole-v0")
-env.action_space.n = 3
+import gym.spaces
+
+from pong_py.pongjs import PongJS
 
 
 def transform_state(state):
     return state / 500
 
-class PongJSEnv(object):
+class PongJSEnv(gym.Env):
     def __init__(self):
         self.env = PongJS()
-        self.action_space = env.action_space
+        self.action_space = gym.spaces.Discrete(3)
         self.observation_space = gym.spaces.box.Box(low=0, high=1, shape=(8,))
 
     @property
@@ -27,7 +25,7 @@ class PongJSEnv(object):
         self.env.init()
         return transform_state(self.env.get_state())
 
-    def step(self, action):
+    def _step(self, action):
         state, reward, done = self.env.step(action)
         return transform_state(state), 1, done, {}
         #return state, reward, done, {}

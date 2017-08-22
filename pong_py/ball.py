@@ -1,4 +1,4 @@
-import helper
+import pong_py.helper as helper
 import random
 
 class Ball():

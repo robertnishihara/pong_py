@@ -1,6 +1,6 @@
-import random 
-import helper
-from helper import Rectangle
+import random
+import pong_py.helper as helper
+from pong_py.helper import Rectangle
 
 class Paddle():
     STOP = 0
@@ -20,7 +20,7 @@ class Paddle():
         self.ai_error = 120
         self.pong = pong
         self.set_direction(0)
-        self.set_position(pong.width - self.width if rhs else 0, 
+        self.set_position(pong.width - self.width if rhs else 0,
                           self.minY + (self.maxY - self.minY) / 2)
         self.prediction = None
         self.ai_prev_action = 0
@@ -58,7 +58,7 @@ class Paddle():
     def predict(self, ball, dt):
         # only re-predict if the ball changed direction, or its been some amount of time since last prediction
         if (self.prediction and ((self.prediction.dx * ball.dx) > 0) and
-                ((self.prediction.dy * ball.dy) > 0) and 
+                ((self.prediction.dy * ball.dy) > 0) and
                 (self.prediction.since < self.ai_reaction)):
             self.prediction.since += dt
             return

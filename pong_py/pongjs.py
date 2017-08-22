@@ -1,6 +1,6 @@
 import numpy as np
-from ball import Ball
-from paddle import Paddle
+from pong_py.ball import Ball
+from pong_py.paddle import Paddle
 
 class PongJS():
     # MDP to
