@@ -8,7 +8,7 @@ class PongJS():
         self.width = 640
         self.height = 480
         self.wall_width = 12
-        self.dt = 0.05 # seconds
+        self.dt = 0.03 # seconds
         #self.dt = 0.01 # seconds
         self.left_pad = Paddle(0, self)
         self.right_pad = Paddle(1, self)
@@ -30,6 +30,8 @@ class PongJS():
         self.reset(0)
 
     def terminate(self):
+        # if self.ball.x < 0:
+        #     import ipdb; ipdb.set_trace()
         if self.ball.left > self.width:
             return True, 1
         elif self.ball.right < 0:
@@ -38,11 +40,12 @@ class PongJS():
             return False, 0
 
     def get_state(self):
-        #return np.array([self.ball.x, self.ball.y, self.ball.dx, self.ball.dy])
-        return np.array([self.left_pad.y, self.right_pad.y,
-                         self.ball.x, self.ball.y,
-                         self.ball.dx, self.ball.dy,
-                         self.ball.x_prev, self.ball.y_prev])
+        return np.array([self.ball.y - self.left_pad.y])
+        #return np.array([self.ball.x, self.ball.y, self.ball.y - self.left_pad.y])
+        # return np.array([self.left_pad.y, self.right_pad.y,
+        #                  self.ball.x, self.ball.y,
+        #                  self.ball.dx, self.ball.dy,
+        #                  self.ball.x_prev, self.ball.y_prev])
 
     def reset(self, player):
         self.ball.reset(player)

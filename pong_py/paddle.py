@@ -15,7 +15,8 @@ class Paddle():
         self.dt = pong.dt
         self.minY = pong.wall_width
         self.maxY = pong.height - pong.wall_width - self.height
-        self.speed = (self.maxY - self.minY) / 2
+        # self.speed = (self.maxY - self.minY) / 2
+        self.speed = (self.maxY - self.minY) / 2 * 2
         self.ai_reaction = 0.1
         self.ai_error = 120
         self.pong = pong
