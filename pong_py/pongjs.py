@@ -40,12 +40,13 @@ class PongJS():
             return False, 0
 
     def get_state(self):
-        return np.array([self.ball.y - self.left_pad.y])
+        #return np.array([self.ball.y - self.left_pad.y])
         #return np.array([self.ball.x, self.ball.y, self.ball.y - self.left_pad.y])
-        # return np.array([self.left_pad.y, self.right_pad.y,
-        #                  self.ball.x, self.ball.y,
-        #                  self.ball.dx, self.ball.dy,
-        #                  self.ball.x_prev, self.ball.y_prev])
+        return np.array([self.ball.y - self.left_pad.y,
+                         self.left_pad.y, self.right_pad.y,
+                         self.ball.x, self.ball.y,
+                         self.ball.dx, self.ball.dy,
+                         self.ball.x_prev, self.ball.y_prev])
 
     def reset(self, player):
         self.ball.reset(player)
